@@ -1,0 +1,77 @@
+<html>
+<head>
+    <title>{{ cosmonaut.name }} - Каталог космонавтов России</title>
+    <style>
+        body {
+            background-color: #FFF5EE;
+            color: #654511;
+            font-family: Georgia, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cosmonaut-photo {
+            width: 200px;
+            height: auto;
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        
+        .cosmonaut-info {
+            margin-left: 220px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}">← Назад к списку космонавтов</a>
+    
+    <h1>{{ cosmonaut.name }}</h1>
+    
+    <div class="cosmonaut-detail">
+        {% if cosmonaut.photo %}
+            <img src="{{ cosmonaut.photo.url }}" alt="{{ cosmonaut.name }}" class="cosmonaut-photo">
+        {% endif %}
+        
+        <div class="cosmonaut-info">
+            <div class="info-item"><strong>Дата рождения:</strong> {{ cosmonaut.birth_date|date:"d.m.Y" }}</div>
+            <div class="info-item"><strong>Место рождения:</strong> {{ cosmonaut.birth_place }}</div>
+            <div class="info-item"><strong>Первый полет:</strong> {{ cosmonaut.first_flight|date:"d.m.Y" }}</div>
+            <div class="info-item"><strong>Количество полетов:</strong> {{ cosmonaut.total_flights }}</div>
+            <div class="info-item"><strong>Общее время в космосе:</strong> {{ cosmonaut.total_space_time }}</div>
+            
+            {% if cosmonaut.eva_count > 0 %}
+            <div class="info-item"><strong>Выходы в открытый космос:</strong> {{ cosmonaut.eva_count }} раз</div>
+            {% if cosmonaut.eva_time %}
+            <div class="info-item"><strong>Время в открытом космосе:</strong> {{ cosmonaut.eva_time }}</div>
+            {% endif %}
+            {% endif %}
+        </div>
+        
+        <div class="clearfix"></div>
+        
+        <div class="section">
+            <h2>Достижения и рекорды</h2>
+            <p>{{ cosmonaut.achievements|linebreaks }}</p>
+        </div>
+        
+        <div class="section">
+            <h2>Биография</h2>
+            <p>{{ cosmonaut.biography|linebreaks }}</p>
+        </div>
+    </div>
+    
+</body>
+</html>
